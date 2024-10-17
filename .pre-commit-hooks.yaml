@@ -1,0 +1,40 @@
+- id: mypy-linter
+  name: mypy
+  language: python
+  files: \.py$
+  types_or: [python]
+  entry: python -m pre_commit_hooks.mypy
+  additional_dependencies: ["mypy"]
+  stages: [pre-commit, pre-push, manual]
+  minimum_pre_commit_version: 3.2.0
+  require_serial: true
+
+- id: poetry-check
+  name: poetry-check
+  language: python
+  files: \.py$|pyproject\.toml|poetry\.lock
+  entry: python -m pre_commit_hooks.poetry check
+  stages: [pre-commit, pre-push, manual]
+  minimum_pre_commit_version: 3.2.0
+  require_serial: true
+
+- id: poetry-lock
+  name: poetry-lock
+  language: python
+  files: \.py$|pyproject\.toml|poetry\.lock
+  entry: python -m pre_commit_hooks.poetry lock
+  stages: [pre-commit, pre-push, manual]
+  minimum_pre_commit_version: 3.2.0
+  require_serial: true
+
+- id: shellcheck-linter
+  name: shellcheck
+  description: Runs shellcheck on all the shell scripts
+  language: python
+  files: \.(sh|bash|zsh)$
+  types_or: [shell]
+  entry: python -m pre_commit_hooks.shellcheck
+  additional_dependencies: ["shellcheck-py"]
+  stages: [pre-commit, pre-push, manual]
+  minimum_pre_commit_version: 3.2.0
+  require_serial: true
