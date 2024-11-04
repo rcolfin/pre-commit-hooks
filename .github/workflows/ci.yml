@@ -78,7 +78,7 @@ jobs:
 
       - name: Run tests and collect coverage
         run: |
-          poetry run pytest --cov-report=xml:${{ github.workspace }}/build/coverage/coverage.xml --cov=. --junitxml=${{ github.workspace }}/build/test-results/junit.xml
+          poetry run pytest --cov-report=xml:${{ github.workspace }}/build/coverage/coverage.xml --cov=pre_commit_hooks --junitxml=${{ github.workspace }}/build/test-results/junit.xml
 
       - name: Publish Test Report
         uses: mikepenz/action-junit-report@v5
