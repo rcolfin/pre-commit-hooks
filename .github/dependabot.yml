@@ -5,11 +5,14 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+    commit-message:
+      prefix: "github action updates"
+    pull-request-grouping: "all"
 
   - package-ecosystem: pip
     directory: "/"
     schedule:
       interval: "weekly"
     commit-message:
-      prefix: "pip prod"
-      prefix-development: "pip dev"
+      prefix: "pip updates"
+    pull-request-grouping: "all"
