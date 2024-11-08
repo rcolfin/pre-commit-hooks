@@ -4,6 +4,9 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  permissions: write-all
+
 on:
   pull_request:
 
@@ -11,7 +14,7 @@ jobs:
   worker:
     runs-on: ubuntu-latest
 
-    if: github.actor == 'dependabot[bot]'
+    if: github.actor != 'dependabot[bot]'
     steps:
       - name: automerge
         uses: actions/github-script@v7.0.1
