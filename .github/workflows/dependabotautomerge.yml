@@ -4,7 +4,9 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-permissions: write-all
+permissions:
+  contents: write
+  pull-requests: write
 
 on:
   pull_request:
