@@ -1,7 +1,7 @@
 # pre-commit-hooks
 
 [![CI Build](https://github.com/rcolfin/pre-commit-hooks/actions/workflows/ci.yml/badge.svg)](https://github.com/rcolfin/pre-commit-hooks/actions/workflows/ci.yml)
-[![License](https://img.shields.io/github/license/rcolfin/pre-commit-hooks.svg)](https://github.com/rcolfin/pre-commit-hooks/LICENSE)
+[![License](https://img.shields.io/github/license/rcolfin/pre-commit-hooks.svg)](https://github.com/rcolfin/pre-commit-hooks/blob/main/LICENSE)
 
 Some out-of-the-box hooks for pre-commit.
 
