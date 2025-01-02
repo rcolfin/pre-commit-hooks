@@ -22,7 +22,7 @@ python = "^3.10"
 
 [tool.poetry.group.dev.dependencies]
 mypy = "^1.13.0"
-ruff = "^0.8.4"
+ruff = "^0.8.5"
 pytest = "^8.3.4"
 pytest-cov = "^6.0.0"
 pytest-ruff = "^0.4.1"
