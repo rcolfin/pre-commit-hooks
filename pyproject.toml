@@ -110,7 +110,6 @@ select = [
   "RUF"
 ]
 ignore = [
-  "PT001", # https://docs.astral.sh/ruff/rules/pytest-fixture-incorrect-parentheses-style/
   "S101", # Use of assert detected https://docs.astral.sh/ruff/rules/assert/
 ]
 # Allow fix for all enabled rules (when `--fix`) is provided.
