@@ -27,6 +27,24 @@
   minimum_pre_commit_version: 3.2.0
   require_serial: true
 
+- id: uv-check
+  name: uv-check
+  language: python
+  files: \.py$|pyproject\.toml|uv\.lock
+  entry: python -m pre_commit_hooks.uv check
+  stages: [pre-commit, pre-push, manual]
+  minimum_pre_commit_version: 3.2.0
+  require_serial: true
+
+- id: uv-lock
+  name: uv-lock
+  language: python
+  files: \.py$|pyproject\.toml|uv\.lock
+  entry: python -m pre_commit_hooks.uv lock
+  stages: [pre-commit, pre-push, manual]
+  minimum_pre_commit_version: 3.2.0
+  require_serial: true
+
 - id: shellcheck-linter
   name: shellcheck
   description: Runs shellcheck on all the shell scripts

@@ -14,8 +14,8 @@ if TYPE_CHECKING:
     from collections.abc import Sequence
 
 logger = logging.getLogger(__name__)
-EXECUTABLES: Final[list[str]] = ["poetry", "uv"]
-EXECUTABLE_PATHS: Final[list[str | None]] = [shutil.which(x) for x in EXECUTABLES]
+EXECUTABLE_PATH: Final[str | None] = shutil.which("uv")
+CMDS: Final[dict[str, tuple[str, ...]]] = {"check": ("lock", "--check"), "lock": ("lock",)}
 
 
 def _get_changed_packages(filenames: Sequence[str]) -> set[Path]:
@@ -26,36 +26,43 @@ def _get_changed_packages(filenames: Sequence[str]) -> set[Path]:
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument(
+
+    common_parser = argparse.ArgumentParser(add_help=False)
+    common_parser.add_argument(
         "filenames",
         nargs="*",
         help="Filenames pre-commit believes are changed.",
     )
-    parser.add_argument(
+    common_parser.add_argument(
         "--cwd",
         type=str,
         default=str(Path.cwd()),
         help="The current working directory.",
     )
+    subparsers = parser.add_subparsers(dest="cmd")
+    for cmd in CMDS:
+        subparsers.add_parser(cmd, help=f"Runs uv {cmd}", parents=[common_parser])
 
     args, extra_args = parser.parse_known_args()
-    executable = next((ex for ex in EXECUTABLE_PATHS if ex), None)
-    if not executable:
-        logger.error("unable to locate either poetry or uv.")
+    if EXECUTABLE_PATH is None:
+        logger.error("uv not found.")
         return 1
 
+    cmd = args.cmd
     cwd = Path(args.cwd)
     if not cwd.is_dir():
         logger.error("%s is not a directory.", cwd)
         return 1
+
     os.chdir(str(cwd))
     packages = _get_changed_packages(args.filenames)
 
     exitcode = 0
-    cmds = (executable, "run", "mypy", *extra_args)
     for package in packages:
-        pcmd = (*cmds, str(package))
-        retcode = subprocess.call(pcmd, cwd=str(package))  # noqa: S603
+        native_cmds = CMDS[cmd]
+        cmds = (EXECUTABLE_PATH, "--project", str(package), *native_cmds, *extra_args)
+        logger.info(" ".join(cmds))
+        retcode = subprocess.call(cmds, cwd=str(package))  # noqa: S603
         if retcode:
             exitcode = 1
 
