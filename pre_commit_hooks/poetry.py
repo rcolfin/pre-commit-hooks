@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import logging
+import os
 import shutil
 import subprocess
 from pathlib import Path
@@ -32,6 +33,12 @@ def main() -> int:
         nargs="*",
         help="Filenames pre-commit believes are changed.",
     )
+    common_parser.add_argument(
+        "--cwd",
+        type=str,
+        default=str(Path.cwd()),
+        help="The current working directory.",
+    )
     subparsers = parser.add_subparsers(dest="cmd")
     for cmd in POETRY_CMDS:
         subparsers.add_parser(cmd, help=f"Runs poetry {cmd}", parents=[common_parser])
@@ -42,6 +49,11 @@ def main() -> int:
         return 1
 
     cmd = args.cmd
+    cwd = Path(args.cwd)
+    if not cwd.is_dir():
+        logger.error("%s is not a directory.", cwd)
+        return 1
+    os.chdir(str(cwd))
     packages = _get_changed_packages(args.filenames)
 
     exitcode = 0

@@ -18,13 +18,13 @@ Add this to your `.pre-commit-config.yaml`
     hooks:
       - id: mypy-linter
       - id: shellcheck-linter
-      - id: poetry-check
-      - id: poetry-lock
+      - id: uv-check
+      - id: uv-lock
 ```
 
 #### mypy-linter
 
-This expects poetry to be used.
+This expects  [poetry](https://python-poetry.org/) or [uv](https://docs.astral.sh/uv/) to be used.
 
 To check the pre-commit hooks on all files:
 
