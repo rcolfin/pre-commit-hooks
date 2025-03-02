@@ -29,7 +29,7 @@ Add this to your `.pre-commit-config.yaml`
 
 ```yaml
 -   repo: https://github.com/rcolfin/pre-commit-hooks
-    rev: v0.3.0
+    rev: v0.3.1
     hooks:
       - id: mypy-linter
       - id: shellcheck-linter

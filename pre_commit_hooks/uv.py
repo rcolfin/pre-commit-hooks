@@ -49,7 +49,7 @@ def main() -> int:
         return 1
 
     cmd = args.cmd
-    cwd = Path(args.cwd)
+    cwd = Path(args.cwd).resolve()
     if not cwd.is_dir():
         logger.error("%s is not a directory.", cwd)
         return 1

@@ -2,7 +2,7 @@
 requires-python = "<4.0,>=3.10"
 dependencies = []
 name = "pre-commit-hooks"
-version = "0.3.0"
+version = "0.3.1"
 description = ""
 authors = [
     {name = "Robert Colfin", email = "robert.m.colfin@gmail.com"},

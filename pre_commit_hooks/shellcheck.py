@@ -2,10 +2,11 @@ from __future__ import annotations
 
 import argparse
 import logging
+import os
 import shutil
 import subprocess
 from pathlib import Path
-from typing import TYPE_CHECKING, Final
+from typing import TYPE_CHECKING, Final, cast
 
 from pre_commit_hooks import util
 
@@ -15,6 +16,7 @@ if TYPE_CHECKING:
 logger = logging.getLogger(__name__)
 
 SHELLCHECK_PATH: Final[str | None] = shutil.which("shellcheck")
+UV_SHELLCHECK_PATH: Final[str | None] = shutil.which("uv")
 
 
 def _get_files(filenames: Sequence[str]) -> set[Path]:
@@ -30,18 +32,31 @@ def main() -> int:
         nargs="*",
         help="Filenames pre-commit believes are changed.",
     )
+    parser.add_argument(
+        "--cwd",
+        type=str,
+        default=str(Path.cwd()),
+        help="The current working directory.",
+    )
 
     args, extra_args = parser.parse_known_args()
 
-    if SHELLCHECK_PATH is None:
+    if SHELLCHECK_PATH is None and UV_SHELLCHECK_PATH is None:
         logger.error("shellcheck not found.")
         return 1
 
+    cwd = Path(args.cwd).resolve()
+    if not cwd.is_dir():
+        logger.error("%s is not a directory.", cwd)
+        return 1
+
+    os.chdir(str(cwd))
     files = _get_files(args.filenames)
-    cwd = Path.cwd().resolve()
 
     exitcode = 0
     cmds = ("shellcheck", *extra_args)
+    if SHELLCHECK_PATH is None:
+        cmds = (cast(str, UV_SHELLCHECK_PATH), "run", *cmds)
     for file in files:
         if not util.is_shell_script(file):
             logger.debug("%s is not a shell script.", file.relative_to(cwd))
