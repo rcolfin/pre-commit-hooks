@@ -44,7 +44,8 @@ function activate() {
         uv venv
     fi
 
-    [ -f .venv/bin/activate ] && source .venv/bin/activate
+    # shellcheck disable=SC1091
+    [ -f .venv/bin/activate ] && source ".venv/bin/activate"
 }
 
 function main() {

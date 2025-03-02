@@ -49,10 +49,11 @@ def main() -> int:
         return 1
 
     cmd = args.cmd
-    cwd = Path(args.cwd)
+    cwd = Path(args.cwd).resolve()
     if not cwd.is_dir():
         logger.error("%s is not a directory.", cwd)
         return 1
+
     os.chdir(str(cwd))
     packages = _get_changed_packages(args.filenames)
 
