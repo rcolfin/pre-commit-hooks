@@ -7,6 +7,21 @@ Some out-of-the-box hooks for pre-commit.
 
 See also: https://github.com/pre-commit/pre-commit
 
+## Development
+
+### Setup Python Environment:
+
+Run [scripts/console.sh](../scripts/console.sh)
+
+The first time run
+
+```sh
+uvx pre-commit install
+```
+
+### If you need to relock:
+
+Run [scripts/lock.sh](../scripts/lock.sh)
 
 ### Using pre-commit-hooks with pre-commit
 
@@ -14,7 +29,7 @@ Add this to your `.pre-commit-config.yaml`
 
 ```yaml
 -   repo: https://github.com/rcolfin/pre-commit-hooks
-    rev: v0.2.0
+    rev: v0.3.0
     hooks:
       - id: mypy-linter
       - id: shellcheck-linter
@@ -24,16 +39,16 @@ Add this to your `.pre-commit-config.yaml`
 
 #### mypy-linter
 
-This expects  [poetry](https://python-poetry.org/) or [uv](https://docs.astral.sh/uv/) to be used.
+This expects [poetry](https://python-poetry.org/) or [uv](https://docs.astral.sh/uv/) to be used.
 
 To check the pre-commit hooks on all files:
 
 ```sh
-pre-commit run --all-files --verbose
+uvx pre-commit run --all-files --verbose
 ```
 
 To check on the pre-commit hooks on select files:
 
 ```sh
-pre-commit run --files ./pyproject.toml --verbose
+uvx pre-commit run --files ./pyproject.toml --verbose
 ```
